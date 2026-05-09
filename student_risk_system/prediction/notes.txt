@@ -1,0 +1,12 @@
+
+
+👉 The order of features in data = [...]
+MUST match the training dataset EXACTLY
+If order is wrong:
+❌ Predictions will be wrong
+
+
+👉 The text in the form MUST match exactly:
+
+Example:
+<option value="Often (5-6 times a week)">Often</option>

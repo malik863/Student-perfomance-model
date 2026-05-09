@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack - Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8fafc] h-screen flex flex-col items-center justify-center p-6">
+
+    <div class="w-full max-w-sm bg-white rounded-3xl shadow-xl p-8 border border-gray-50">
+        <h2 class="text-xl font-bold text-[#1e293b] mb-2">Create Account</h2>
+        <p class="text-sm text-gray-400 mb-8 font-medium">Join EduTrack to monitor your performance.</p>
+        
+        {% if error %}
+<div class="bg-red-100 text-red-700 p-3 rounded-xl mb-4">
+    {{ error }}
+</div>
+{% endif %}
+        <form method="POST" action="" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">username</label>
+                <input name="username" type="text" placeholder="Username" class="w-full p-4 rounded-xl bg-gray-50 border-none outline-none focus:ring-2 focus:ring-[#0077b6]/30 transition-all">
+            </div>
+
+
+
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Password</label>
+                <input name="password" type="password" placeholder="Create Password" class="w-full p-4 rounded-xl bg-gray-50 border-none outline-none focus:ring-2 focus:ring-[#0077b6]/30 transition-all">
+            </div>
+
+            <button type="submit" class="w-full bg-[#0077b6] text-white font-black py-4 rounded-2xl mt-4 shadow-lg shadow-blue-100 transition-all active:scale-95 uppercase text-sm tracking-wide">
+                Create Account
+            </button>
+        </form>
+
+        <p class="mt-8 text-center text-sm text-gray-400">
+            Already a member? <a href="{% url 'login' %}" class="text-[#0077b6] font-bold hover:underline">Login</a>
+        </p>
+    </div>
+
+</body>
+</html>

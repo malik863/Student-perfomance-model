@@ -1,0 +1,19 @@
+<!-- predict.html -->
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<h2>Student Risk Prediction</h2>
+
+<form method="post">
+    {% csrf_token %} <!-- security token (required in Django) -->
+
+    {{ form.as_p }} <!-- render form fields as paragraphs -->
+
+    <button type="submit">Predict</button>
+</form>
+
+{% if result %}
+    <!-- show result only if prediction exists -->
+    <h3>Risk Level: {{ result }}</h3>
+{% endif %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack - Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8fafc] min-h-screen p-4 md:p-8 font-sans">
+
+    <div class="flex flex-col items-center mb-8">
+        <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#0077b6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            <span class="text-xl font-bold text-[#1e293b]">EduTrack</span>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
+        
+        <header class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-[#1e293b]">Performance Overview</h2>
+            <p class="text-gray-400 text-sm mt-1">Personalized Analysis</p>
+        </header>
+
+        <div class="flex flex-col items-center mb-12">
+            <div class="relative w-60 h-32 flex items-end justify-center">
+                <div class="absolute inset-0 border-[16px] border-gray-100 rounded-t-full"></div>
+                <div class="absolute inset-0 border-[16px] border-[#f59e0b] rounded-t-full border-b-0" style="clip-path: inset(0 20% 0 0);"></div>
+                <span class="text-xl font-black text-[#f59e0b] uppercase tracking-wider pb-2">{{ result }}</span>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 border-l-4 border-[#0077b6] p-5 rounded-r-xl mb-10">
+            <h4 class="text-[#0077b6] text-xs font-bold uppercase mb-1">Key Insight</h4>
+            <p class="text-[#1e293b] text-sm leading-relaxed">
+                Increased absences and late submissions detected. Early action is highly recommended to stay on track.
+            </p>
+        </div>
+
+        <h3 class="text-lg font-bold text-[#1e293b] mb-6">Your Recommended Actions</h3>
+
+
+<div class="flex flex-col md:flex-row gap-4">
+
+    {% if recommendations|length == 0 %}
+    <div class="text-gray-400 text-sm">
+        No recommendations needed. Keep going 👍
+    </div>
+    {% else %}
+
+    <div class="flex flex-col md:flex-row gap-4">
+        {% for rec in recommendations %}
+         
+        <div class="flex-1 bg-gray-50 p-5 rounded-2xl border border-transparent hover:border-[#10b981] transition-all">
+            <span class="text-2xl">{{ rec.icon }}</span>
+        
+            <h4 class="font-bold text-[#1e293b] mt-2 text-sm">
+                {{ rec.title }}
+            </h4>
+        
+            <p class="text-xs text-gray-500 mt-1">
+                {{ rec.desc }}
+            </p>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    
+
+</div>
+        
+
+        <div class="mt-12 text-center">
+            <a href="{% url 'home' %}" class="text-gray-400 hover:text-[#0077b6] font-bold text-xs uppercase tracking-widest transition-colors">
+                ← Return to Hub
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
