@@ -225,36 +225,66 @@ def predict(request):
             # ==============================
             # Recommendations
             # ==============================
+            
+
             recommendations = []
 
+            risk_score = 0
+
+            # Stress
             if stress_order.get(stress, 0) >= 2:
+                risk_score += 2
                 recommendations.append({
+                    "priority": "high",
                     "icon": "🧠",
                     "title": "Stress Management",
-                    "desc": "Use planning, breaks, and relaxation techniques."
+                    "desc": "Your stress level appears high. Consider relaxation techniques and better study scheduling."
                 })
 
+            # Exercise
             if freq_exercise.get(exercise, 0) <= 1:
+                risk_score += 1
                 recommendations.append({
+                    "priority": "medium",
                     "icon": "🏃",
-                    "title": "Exercise",
-                    "desc": "Increase physical activity at least 3 times per week."
+                    "title": "Physical Activity",
+                    "desc": "Regular exercise may improve concentration and reduce stress."
                 })
 
+            # Attendance
             if feq_classes.get(skip, 0) >= 2:
+                risk_score += 2
                 recommendations.append({
+                    "priority": "high",
                     "icon": "📚",
-                    "title": "Attendance",
-                    "desc": "Improve class attendance consistency."
+                    "title": "Class Attendance",
+                    "desc": "Frequent absence can negatively affect academic performance."
                 })
 
-            # ✅ handle empty case
+            # Overall advice
+            if risk_score >= 4:
+                recommendations.append({
+                    "priority": "high",
+                    "icon": "🚨",
+                    "title": "Academic Attention",
+                    "desc": "You may benefit from academic counseling or additional support."
+                })
+
+            # Positive case
             if not recommendations:
                 recommendations.append({
+                    "priority": "low",
                     "icon": "✅",
-                    "title": "Good Job",
-                    "desc": "Your habits look healthy. Keep it up!"
+                    "title": "Healthy Habits",
+                    "desc": "Your current habits appear balanced. Keep maintaining them."
                 })
+
+            # Sort recommendations
+            recommendations.sort(
+                key=lambda x: {"high": 1, "medium": 2, "low": 3}[x["priority"]]
+            )
+
+
 
             return render(request, "result.html", {
                 "result": result,

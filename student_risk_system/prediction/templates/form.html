@@ -30,17 +30,17 @@
             
             <div class="flex flex-col items-center">
                 <div id="circle1" class="w-10 h-10 bg-[#2dd4bf] text-white rounded-full flex items-center justify-center font-bold shadow-lg shadow-teal-100 ring-4 ring-white">1</div>
-                <span id="text1" class="text-[10px] font-black mt-2 text-[#2dd4bf] uppercase tracking-widest">Academic</span>
+                <span id="text1" class="text-[10px] font-black mt-2 text-[#2dd4bf] uppercase tracking-widest">Rest & Sleep</span>
             </div>
             
             <div class="flex flex-col items-center">
                 <div id="circle2" class="w-10 h-10 bg-white border-2 border-gray-200 text-gray-400 rounded-full flex items-center justify-center font-bold ring-4 ring-white">2</div>
-                <span id="text2" class="text-[10px] font-black mt-2 text-gray-400 uppercase tracking-widest">Engagement</span>
+                <span id="text2" class="text-[10px] font-black mt-2 text-gray-400 uppercase tracking-widest">Daily Focus</span>
             </div>
             
             <div class="flex flex-col items-center">
                 <div id="circle3" class="w-10 h-10 bg-white border-2 border-gray-200 text-gray-400 rounded-full flex items-center justify-center font-bold ring-4 ring-white">3</div>
-                <span id="text3" class="text-[10px] font-black mt-2 text-gray-400 uppercase tracking-widest">Context</span>
+                <span id="text3" class="text-[10px] font-black mt-2 text-gray-400 uppercase tracking-widest">Lifestyle</span>
             </div>
         </div>
     </div>
@@ -63,8 +63,9 @@
     <!-- STEP 1 -->
     <div id="step1">
         <h2 class="text-xl font-bold mb-6">Sleep Issues</h2>
-
         <div class="space-y-4">
+
+
 
             <label>Difficulty Falling Asleep</label>
             <select name="sleep_difficulty" class="w-full p-3 bg-gray-100 rounded">
@@ -107,16 +108,17 @@
 
 
         </div>
-
-        <button type="button" onclick="showStep(2)" class="btn">Next</button>
-    </div>
+        <div class="mt-8">
+            <button type="button" onclick="showStep(2)" class="w-full py-3 bg-[#2dd4bf] text-white rounded-xl font-bold shadow-lg shadow-teal-100">Next</button>
+        </div>
+    </div> 
 
 
     <!-- STEP 2 -->
-    <div id="step2" class="hidden">
+    <div id="step2" class="hidden space-y-4">
         <h2 class="text-xl font-bold mb-6">Academic Effects</h2>
 
-        <div c.lass="space-y-4">
+        <div class="space-y-4">
 
             <label>Difficulty Concentrating</label>
             <select name="concentration" class="w-full p-3 bg-gray-100 rounded">
@@ -156,22 +158,19 @@
             {% if form.skip_classes.errors %}
             <p class="text-red-500 text-xs">This field is required</p>
             {% endif %}
-
-
-
         </div>
 
-        <button type="button" onclick="showStep(3)" class="btn">Next</button>
+        <div class="flex gap-4 mt-8">
+            <button type="button" onclick="showStep(1)" class="w-1/3 py-3 px-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-colors">Back</button>
+            <button type="button" onclick="showStep(3)" class="flex-1 btn py-3 px-4 bg-[#2dd4bf] text-white rounded-xl font-bold">Next</button>
+        </div>
     </div>
 
 
     <!-- STEP 3 -->
-    <div id="step3" class="hidden">
+    <div id="step3" class="hidden space-y-4">
         <h2 class="text-xl font-bold mb-6">Lifestyle</h2>
-
         <div class="space-y-4">
-
-
 
             <label>Caffeine Consumption</label>
             <select name="caffeine" class="w-full p-3 bg-gray-100 rounded">
@@ -199,17 +198,17 @@
             {% if form.exercise.errors %}
             <p class="text-red-500 text-xs">This field is required</p>
             {% endif %}
-
         </div>
-
-        <button type="button" onclick="showStep(4)" class="btn">Next</button>
+        <div class="flex gap-4 mt-8">
+            <button type="button" onclick="showStep(2)" class="w-1/3 py-3 px-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-colors">Back</button>
+            <button type="button" onclick="showStep(4)" class="flex-1 btn py-3 px-4 bg-[#2dd4bf] text-white rounded-xl font-bold">Next</button>          
+        </div>
     </div>
 
 
     <!-- STEP 4 -->
-    <div id="step4" class="hidden">
+    <div id="step4" class="hidden space-y-4">
         <h2 class="text-xl font-bold mb-6">Final Factors</h2>
-
         <div class="space-y-4">
 
             <label>Stress Level</label>
@@ -233,15 +232,13 @@
                 <option>Average</option>
                 <option>Excellent</option>
             </select>
-
-
-
         </div>
-
-        <button type="submit" class="w-full bg-green-500 text-white p-3 rounded">
-            Get Prediction
-        </button>
+        <div class="flex gap-4 mt-8">
+            <button type="button" onclick="showStep(3)" class="w-1/3 py-3 px-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-colors">Back</button>
+            <button type="submit" class="flex-1 btn py-3 px-4 bg-[#0077b6] text-white rounded-xl font-bold">Submit Assessment</button>
+        </div>
     </div>
+
 
 </form>
 
@@ -249,33 +246,49 @@
 
     <script>
         function showStep(step) {
-            // Hide sections
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step3').classList.add('hidden');
-            document.getElementById('step' + step).classList.remove('hidden');
+            // 1. Hide ALL sections (including Step 4)
+            // We use a loop or manual list to ensure Step 4 is hidden when moving back to 1, 2, or 3.
+            const allSteps = ['step1', 'step2', 'step3', 'step4'];
+            allSteps.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.add('hidden');
+                }
+            });
 
-            // Update Stepper Colors
+            // 2. Show the current step
+            const currentElement = document.getElementById('step' + step);
+            if (currentElement) {
+                currentElement.classList.remove('hidden');
+            }
+
+            // 3. Update Stepper Colors (Updated to loop through all stages)
             const teal = "#2dd4bf";
             const gray = "#e5e7eb";
             const darkGray = "#9ca3af";
 
+            // If your visual stepper only has 3 circles, we loop to 3. 
+            // If you added a 4th circle, change '3' to '4'.
             for(let i=1; i<=3; i++) {
                 const circle = document.getElementById('circle' + i);
                 const text = document.getElementById('text' + i);
+                
+                if (!circle || !text) continue;
+
                 if(i <= step) {
-                    circle.classList.replace('bg-white', 'bg-[#2dd4bf]');
-                    circle.classList.replace('text-gray-400', 'text-white');
+                    circle.classList.add('bg-[#2dd4bf]', 'text-white');
+                    circle.classList.remove('bg-white', 'text-gray-400');
                     circle.style.borderColor = teal;
                     text.style.color = teal;
                 } else {
-                    circle.classList.replace('bg-[#2dd4bf]', 'bg-white');
-                    circle.classList.replace('text-white', 'text-gray-400');
+                    circle.classList.add('bg-white', 'text-gray-400');
+                    circle.classList.remove('bg-[#2dd4bf]', 'text-white');
                     circle.style.borderColor = gray;
                     text.style.color = darkGray;
                 }
             }
         }
+        
     </script>
 
 </body>

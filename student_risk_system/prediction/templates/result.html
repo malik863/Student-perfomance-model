@@ -7,6 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#f8fafc] min-h-screen p-4 md:p-8 font-sans">
+        <div class="absolute top-6 right-6">
+    <a href="{% url 'logout' %}" 
+       class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-bold shadow-lg transition-all duration-200">
+        Logout
+    </a>
+</div>
 
     <div class="flex flex-col items-center mb-8">
         <div class="flex items-center space-x-2">
@@ -24,13 +30,29 @@
             <p class="text-gray-400 text-sm mt-1">Personalized Analysis</p>
         </header>
 
-        <div class="flex flex-col items-center mb-12">
-            <div class="relative w-60 h-32 flex items-end justify-center">
-                <div class="absolute inset-0 border-[16px] border-gray-100 rounded-t-full"></div>
-                <div class="absolute inset-0 border-[16px] border-[#f59e0b] rounded-t-full border-b-0" style="clip-path: inset(0 20% 0 0);"></div>
-                <span class="text-xl font-black text-[#f59e0b] uppercase tracking-wider pb-2">{{ result }}</span>
-            </div>
-        </div>
+<div class="flex flex-col items-center mb-12">
+    <div class="relative w-64 h-32 flex items-end justify-center overflow-hidden">
+        <!-- Background Gray Track -->
+        <div class="absolute inset-0 border-[20px] border-gray-100 rounded-t-full"></div>
+        
+        <!-- Dynamic Gauge Bar -->
+        {% if result == "High Risk" %}
+            <!-- Red/Coral for High Risk (Fills 80% of gauge) -->
+            <div class="absolute inset-0 border-[20px] border-red-500 rounded-t-full border-b-0" 
+                 style="clip-path: inset(0 15% 0 0);"></div>
+            <span class="text-2xl font-black text-red-600 uppercase tracking-widest pb-2 drop-shadow-sm">
+                {{ result }}
+            </span>
+        {% else %}
+            <!-- Green for Low Risk (Fills 30% of gauge) -->
+            <div class="absolute inset-0 border-[20px] border-emerald-500 rounded-t-full border-b-0" 
+                 style="clip-path: inset(0 70% 0 0);"></div>
+            <span class="text-2xl font-black text-emerald-600 uppercase tracking-widest pb-2 drop-shadow-sm">
+                {{ result }}
+            </span>
+        {% endif %}
+    </div>
+</div>
 
         <div class="bg-blue-50 border-l-4 border-[#0077b6] p-5 rounded-r-xl mb-10">
             <h4 class="text-[#0077b6] text-xs font-bold uppercase mb-1">Key Insight</h4>
